@@ -34,7 +34,7 @@ static uint8_t ledDutySteup = 5;        //呼吸灯占空比变化步长
 static uint32_t duty = 1000;            //呼吸灯占空比变量
 #define TEST_ONE_SHOT    false        // testing will be done without auto reload (one-shot)
 #define TEST_RELOAD      true         // testing will be done with auto reload
-os_timer_t os_timer;                    //定义定时器结构体
+static os_timer_t os_timer;                    //定义定时器结构体
 static const char *TAG = "main";		//格式化输出前缀
 static volatile int state = 0;
 
@@ -58,10 +58,10 @@ static void pwm_breathe_led(void *arg)
     pwm_start();                         //PWM启动    
 }
 
-void hw_timer_callback1(void *arg)
+void hw_timer_callback1(void *timer_arg)
 {
-
     state++;
+    ets_printf("test");
     // if(state == 1000000){
     //     gpio_set_level(CHANNLE_PWM_IO_NUM_LED1, 0);
     // }
@@ -73,7 +73,7 @@ void hw_timer_callback1(void *arg)
 void app_main(void)
 {
     uart_set_baudrate(UART_NUM_0,115200);//初始化波特率为115200
-
+    ESP_LOGI(TAG,esp_get_idf_version());
     ESP_LOGI(TAG, "Config gpio");
     gpio_config_t io_conf;
     io_conf.intr_type = GPIO_INTR_DISABLE;
