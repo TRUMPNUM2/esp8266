@@ -15,6 +15,9 @@ extern "C" {
 // Register WiFi functions
 void register_wifi();
 
+
+ bool wifi_join(const char* ssid, const char* pass, int timeout_ms);
+ 
 #ifdef __cplusplus
 }
 #endif
